@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+	<script>
+		// 配置实例
+		var getData = axios.create({
+	  		baseURL: 'http://befexam.51bm.net.cn',
+	  		timeout: 1000,
+  			// 配置服务端需要的请求头
+	  		headers: {
+	  			'Content-Type': 'application/x-www-form-urlencoded',//
+	  			"Accept": "application/json",
+	  			"platformType":1,
+	  			"tkn":"yx001"
+	  		},
+  			// 先写上公共的参数，再可以合并调用实例时传入的具体的参数,
+  		 	transformRequest: [function (data) {//参数data就是调用时传入的参数
+  		 		var parm=new URLSearchParams();
+  		 		var ssss=data?JSON.stringify(data):"";
+  		 		var pa="{'m':'','p':'"+ssss+"'}";
+				parm.append("data",pa)
+				parm.append("ticket","WmIuPhoZQo$1VDBFOVBRPT07UFQweE9UMHhQVDB4T1RrPTs4OA==")
+  		 		console.log(data)
+    			return parm;
+  			}],
+		});
+
+		// 调用实例
+		var url="/api/m/auth/college/hot/query.htm";
+		getData.post(url).then(function (response) {
+		    console.log(response.data);
+	  	}).catch(function (error) {
+		    console.log(error);
+	  	});
+
+	</script>
+</body>
+</html>
